@@ -90,17 +90,6 @@ public class LinkedListImpl {
 			curNode.next = preNode;
 			preNode = curNode;
 			curNode = nextNode;
-			
-			/*
-			nextNode = curNode.next;
-			curNode.next = preNode;
-			preNode = nextNode;			
-						
-			if(nextNode==null){
-				break;
-			}*/
-			 
-			//System.out.print(curNode.data + " -> ");
 		}
 		
 		head = preNode;
