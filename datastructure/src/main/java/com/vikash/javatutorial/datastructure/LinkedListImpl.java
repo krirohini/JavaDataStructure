@@ -226,7 +226,7 @@ public class LinkedListImpl {
     }
  
 	
-	public static void main(String[] args) { 
+/*	public static void main(String[] args) { 
 		LinkedListImpl list = new LinkedListImpl();
 		
 		list.addatBeg(3);
@@ -264,5 +264,6 @@ public class LinkedListImpl {
 //		listIntersect.printListFromNode(intersectTwoList);
 
 	}
+	*/
 
 }
