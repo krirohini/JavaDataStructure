@@ -6,6 +6,7 @@ import java.util.Random;
 public class LinkedListImpl {
 
 	private Node head;
+	//private Node intersectNode;
 	
 	static class Node {
 		int data;
@@ -22,43 +23,52 @@ public class LinkedListImpl {
 		}
 	}
 	
+	public Node getHead() {
+		return head;
+	}
+
+	private void setHead(Node head) {
+		this.head = head;
+	}
+
 	public LinkedListImpl() {
-		head = null;
+		setHead(null);
 	}
 
 	public void addAtBeg(int num) {
 		Node tNode = new Node(num);
-		if (head == null) {
-			head = tNode;
+		if (getHead() == null) {
+			setHead(tNode);
 			return;
 		} else {
-			tNode.next = head;
-			head = tNode;
+			tNode.next = getHead();
+			setHead(tNode);
 		}
 	}
 
-	public void addAtEnd(int num) {
+	public Node addAtEnd(int num) {
 		Node tNode = new Node(num);
-		if (head == null) {
-			head = tNode;
-			return;
+		if (getHead() == null) {
+			setHead(tNode);
+			return tNode;
 		}
-		Node curNode = head;
+		Node curNode = getHead();
 		while(curNode != null) {
 			if(curNode.next == null) {
 				curNode.next = tNode;
-				return;
+				return tNode;
 			}
 			curNode = curNode.next;
 		}
+		return null;
 	}
 	
-	public void traverse() {
-		if(head == null) {
+	public void printList() {
+		if(getHead() == null) {
 			System.out.println("empty list");
 			return;
 		}
-		Node curNode = head;
+		Node curNode = getHead();
 		System.out.print("|");
 		while (curNode != null) {
 				System.out.print(curNode.data + "|->|");
@@ -68,10 +78,10 @@ public class LinkedListImpl {
 	}
 	public int size() {
 		int count = 0;
-		if(head == null) {
+		if(getHead() == null) {
 			return count;
 		}
-		Node curNode = head;
+		Node curNode = getHead();
 		while (curNode != null) {
 			//count = count++;
 			count = count +1;
@@ -82,7 +92,7 @@ public class LinkedListImpl {
 	
 	public void reverseListIterative() {
 		Node preNode = null;
-		Node curNode = head;
+		Node curNode = getHead();
 		Node nextNode = null;
 		
 		while(curNode != null){
@@ -92,11 +102,11 @@ public class LinkedListImpl {
 			curNode = nextNode;
 		}
 		
-		head = preNode;
+		setHead(preNode);
 	}	
 	public void reverseListRecurssive() {
 		
-		reverseUtil(head, null);
+		reverseUtil(getHead(), null);
 	}
 	// A simple and tail recursive function to reverse
     // a linked list.  prev is passed as NULL initially.
@@ -104,7 +114,7 @@ public class LinkedListImpl {
  
         /* If last node mark it head*/
         if (curNode.next == null) {
-            head = curNode;
+            setHead(curNode);
  
             /* Update next to prev node */
             curNode.next = preNode;
@@ -118,7 +128,7 @@ public class LinkedListImpl {
         curNode.next = preNode;
  
         reverseUtil(nextNode, curNode);
-        return head;
+        return getHead();
     }
 	
 	/**
@@ -136,7 +146,50 @@ public class LinkedListImpl {
 	 * Given two linked lists, return the intersection of the two lists: 
 	 * i.e. return a list containing only the elements that occur in both of the input lists.
 	 */
-	//public void commonElementsOfTwoList(Node node1, Node node2){
+    public Node intersectTwoList(LinkedListImpl list1, LinkedListImpl list2){  	
+    	int szL1 = list1.size();
+    	int szL2 = list2.size();
+    	
+    	Node point1 = list1.getHead() ;
+    	Node point2 = list2.getHead();
+    	    	
+    	if(szL1 == 0 || szL2 == 0){
+    		System.out.println("List Can't Intersect, One of the list is Empty");
+    		return null;
+    	}else if(point1 == point2){
+    		System.out.println("Both Lists are same");
+    		return point1;
+    	}else if(szL1 > szL2){
+    		int count = szL1 - szL2;
+    		while(count != 0){
+    			point1 = point1.next;
+    			count = count - 1;
+    		}
+       	}else {
+    		int count = szL2 - szL1;
+    		while(count != 0){
+    			point2 = point2.next;
+    			count = count - 1;
+    		}
+       	}	
+    	
+    	while( point1 != null && point2 != null){
+    		if( point1 == point2){
+    			System.out.println("This is intersection Node");
+    			return point1;
+    		}
+    		point1 = point1.next;
+    		point2 = point2.next;
+    	}
+    	
+    	System.out.println("List Doesnot Intersect");    	
+    	return null;
+    }
+    
+	
+    
+    //Common Data of given two lists
+    //public void commonElementsOfTwoList(Node node1, Node node2){
 	public void commonElementsOfTwoList(LinkedListImpl list1, LinkedListImpl list2){
 		Node comnNode;
 		LinkedListImpl comnListData = new LinkedListImpl();
@@ -144,8 +197,8 @@ public class LinkedListImpl {
 			System.out.println("One of the list is Empty.");
 		}else{
 			//Node curNode2 = head2;
-			Node curNode = head;
-			Node curNode2 = head;
+			Node curNode = getHead();
+			Node curNode2 = getHead();
 			
 			//System.out.print("|");
 			while (curNode != null) {
@@ -162,7 +215,7 @@ public class LinkedListImpl {
 				//curNode = curNode.next;
 			}
 			//System.out.println("null|");
-			comnListData.traverse();
+			comnListData.printList();
 		}
 			
 		//return comnNode;
@@ -171,27 +224,38 @@ public class LinkedListImpl {
 	
 	public static void main(String[] args) { 
 		LinkedListImpl list = new LinkedListImpl();
-		list.addAtBeg(5);
 		list.addAtBeg(4);
-		list.addAtEnd(9);
-		list.traverse();
-		System.out.println("Size of the list is " +list.size());
-		list.reverseListIterative();
-		list.traverse();
-		list.reverseListRecurssive();
-		list.traverse();
+		list.addAtBeg(3);
+		Node intersectNode = list.addAtEnd(5);
 		
-		
-//		LinkedListImpl list2 = new LinkedListImpl();
-//		list2.addAtBeg(5);
-//		list2.addAtBeg(4);
-//		list2.addAtEnd(9);
-//		list2.addAtEnd(23);
-//		list2.traverse();
-//		System.out.println("Size of the list2 is " +list2.size());
-//		//list.reverseList();
-//		list.commonElementsOfTwoList(list, list2);
+		list.addAtBeg(2);
+		list.addAtBeg(1);
+		list.addAtEnd(6);
+		list.addAtEnd(7);
+		list.addAtEnd(8);
 
+		
+		list.printList();
+		System.out.println("Size of the list is " +list.size());
+//		list.reverseListIterative();
+//		list.printList();
+//		list.reverseListRecurssive();
+//		list.printList();
+		
+		
+		LinkedListImpl list2 = new LinkedListImpl();
+		
+		list2.addAtBeg(12);
+		list2.addAtBeg(11);
+		Node prevNode = list2.addAtEnd(13);
+		prevNode.next = intersectNode;
+		
+		list2.printList();
+		System.out.println("Size of the list2 is " +list2.size());
+//		list.commonElementsOfTwoList(list, list2);
+//
+//		LinkedListImpl listIntersect = new LinkedListImpl();
+//		listIntersect.intersectTwoList(list, list2);
 	}
 
 }
