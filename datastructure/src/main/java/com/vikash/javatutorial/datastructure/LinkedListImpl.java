@@ -190,36 +190,37 @@ public class LinkedListImpl {
     
     //Common Data of given two lists
     //public void commonElementsOfTwoList(Node node1, Node node2){
-	public void commonElementsOfTwoList(LinkedListImpl list1, LinkedListImpl list2){
-		Node comnNode;
-		LinkedListImpl comnListData = new LinkedListImpl();
-		if(list1 == null || list2 == null) {
-			System.out.println("One of the list is Empty.");
-		}else{
-			//Node curNode2 = head2;
-			Node curNode = getHead();
-			Node curNode2 = getHead();
-			
-			//System.out.print("|");
-			while (curNode != null) {
-				while(curNode2 != null){
-					if(curNode.data == curNode2.data){
-						comnNode = new Node(curNode.data);
-						comnListData.addAtBeg(comnNode.data);
-						
-							//comnNode.data = curNode.data;							
-					}
-					//comnNode.next=null;
-				}//curNode2 = curNode2.next;
-				//System.out.print(comnNode.data + "|->|");
-				//curNode = curNode.next;
-			}
-			//System.out.println("null|");
-			comnListData.printList();
-		}
-			
-		//return comnNode;
-	}
+//	public void commonElementsOfTwoList(LinkedListImpl list1,
+//			LinkedListImpl list2) {
+//		Node comnNode;
+//		LinkedListImpl comnListData = new LinkedListImpl();
+//		if (list1 == null || list2 == null) {
+//			System.out.println("One of the list is Empty.");
+//		} else {
+//			// Node curNode2 = head2;
+//			Node curNode = list1.getHead();
+//			Node curNode2 = list2.getHead();
+//
+//			// System.out.print("|");
+//			while (curNode != null) {
+//				while (curNode2 != null) {
+//					if (curNode.data == curNode2.data) {
+//						comnNode = new Node(curNode.data);
+//						comnListData.addAtBeg(comnNode.data);
+//
+//						// comnNode.data = curNode.data;
+//					}
+//					// comnNode.next=null;
+//				}// curNode2 = curNode2.next;
+//					// System.out.print(comnNode.data + "|->|");
+//					// curNode = curNode.next;
+//			}
+//			// System.out.println("null|");
+//			comnListData.printList();
+//		}
+//
+//		// return comnNode;
+//	}
 	
 	
 	public static void main(String[] args) { 
@@ -252,10 +253,12 @@ public class LinkedListImpl {
 		
 		list2.printList();
 		System.out.println("Size of the list2 is " +list2.size());
-//		list.commonElementsOfTwoList(list, list2);
-//
-//		LinkedListImpl listIntersect = new LinkedListImpl();
-//		listIntersect.intersectTwoList(list, list2);
+	
+		LinkedListImpl listIntersect = new LinkedListImpl();
+		Node intersectTwoList = listIntersect.intersectTwoList(list, list2);
+		if(intersectTwoList !=null) {
+		System.out.println("data at intersectTwoList" + intersectTwoList.data);
+		}
 	}
 
 }
