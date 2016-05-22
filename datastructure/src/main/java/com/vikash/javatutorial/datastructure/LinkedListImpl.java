@@ -1,12 +1,8 @@
 package com.vikash.javatutorial.datastructure;
 
 
-import java.util.Random;
 
 public class LinkedListImpl {
-
-	private Node head;
-	//private Node intersectNode;
 	
 	static class Node {
 		int data;
@@ -16,12 +12,8 @@ public class LinkedListImpl {
 			data = value;
 			next = null;
 		}
-
-		public int size(Node head) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
 	}
+	private Node head;
 	
 	public Node getHead() {
 		return head;
@@ -34,20 +26,57 @@ public class LinkedListImpl {
 	public LinkedListImpl() {
 		setHead(null);
 	}
+	
+	
+	Node GetNth( int index) {
+		Node current = head;
+		int count = 0; // the index of the node we're currently looking at
+		while (current != null) {
+			if (count == index) {
+				return(current);
+			}
+			count++;
+			current = current.next;
+		}
+		assert(true); // if we get to this line, the caller was asking
+		// for a non-existent element so we assert fail.
+		return null;
+	}
 
-	public void addAtBeg(int num) {
-		Node tNode = new Node(num);
-		if (getHead() == null) {
-			setHead(tNode);
-			return;
+	public Node push(Node node, int val) {
+		Node tNode = new Node(val);
+		tNode.next = node;
+		return tNode;
+	}
+	
+	public Node pop() {
+		if(head == null) {
+			return null;
+		}
+		 
+		Node firstNode = head; 
+		head = head.next;
+		return firstNode;
+	}
+	
+	public void addatBeg(int val) {
+		head = push(head, val);
+	}
+	
+	public void insertNth(int val, int index) {
+		
+		if(index == 0){
+			addatBeg(val);
 		} else {
-			tNode.next = getHead();
-			setHead(tNode);
+			Node prevNode = GetNth(index-1);
+			Node newNode = push(prevNode.next, val);
+			prevNode.next = newNode;
 		}
 	}
 
-	public Node addAtEnd(int num) {
-		Node tNode = new Node(num);
+	//addAtEnd
+	public Node append(int val) {
+		Node tNode = new Node(val);
 		if (getHead() == null) {
 			setHead(tNode);
 			return tNode;
@@ -60,7 +89,14 @@ public class LinkedListImpl {
 			}
 			curNode = curNode.next;
 		}
-		return null;
+		
+//		while(curNode.next != null) {
+//			curNode = curNode.next;
+//		}
+//		
+//		curNode.next = tNode;
+		
+		return tNode;
 	}
 	
 	public void printList() {
@@ -88,8 +124,7 @@ public class LinkedListImpl {
 		}
 		Node curNode = getHead();
 		while (curNode != null) {
-			//count = count++;
-			count = count +1;
+			count = count++;
 			curNode = curNode.next;
 		}
 		return count;
@@ -106,11 +141,10 @@ public class LinkedListImpl {
 			preNode = curNode;
 			curNode = nextNode;
 		}
-		
 		setHead(preNode);
 	}	
+	
 	public void reverseListRecurssive() {
-		
 		reverseUtil(getHead(), null);
 	}
 	// A simple and tail recursive function to reverse
@@ -190,45 +224,44 @@ public class LinkedListImpl {
     	System.out.println("List Doesnot Intersect");    	
     	return null;
     }
-    
-	
-    
  
 	
 	public static void main(String[] args) { 
 		LinkedListImpl list = new LinkedListImpl();
-		list.addAtBeg(4);
-		list.addAtBeg(3);
-		Node intersectNode = list.addAtEnd(5);
 		
-		list.addAtBeg(2);
-		list.addAtBeg(1);
-		list.addAtEnd(6);
-		list.addAtEnd(7);
-		list.addAtEnd(8);
+		list.addatBeg(3);
+		list.insertNth(4, 1);
+		list.printList();
+		Node intersectNode = list.append(5);
+		
+		list.addatBeg(2);
+		list.addatBeg(1);
+		list.insertNth(6, 5);
+		list.append(7);
+		list.append(8);
 
 		
 		list.printList();
-		System.out.println("Size of the list is " +list.size());
-//		list.reverseListIterative();
-//		list.printList();
-//		list.reverseListRecurssive();
-//		list.printList();
-		
-		
-		LinkedListImpl list2 = new LinkedListImpl();
-		
-		list2.addAtBeg(12);
-		list2.addAtBeg(11);
-		Node prevNode = list2.addAtEnd(13);
-		prevNode.next = intersectNode;
-		
-		list2.printList();
-		System.out.println("Size of the list2 is " +list2.size());
-	
-		LinkedListImpl listIntersect = new LinkedListImpl();
-		Node intersectTwoList = listIntersect.intersectTwoList(list, list2);
-		listIntersect.printListFromNode(intersectTwoList);
+//		System.out.println("Size of the list is " +list.size());
+////		list.reverseListIterative();
+////		list.printList();
+////		list.reverseListRecurssive();
+////		list.printList();
+//		
+//		
+//		LinkedListImpl list2 = new LinkedListImpl();
+//		
+//		list2.addatBeg(12);
+//		list2.addatBeg(11);
+//		Node prevNode = list2.append(13);
+//		prevNode.next = intersectNode;
+//		
+//		list2.printList();
+//		System.out.println("Size of the list2 is " +list2.size());
+//	
+//		LinkedListImpl listIntersect = new LinkedListImpl();
+//		Node intersectTwoList = listIntersect.intersectTwoList(list, list2);
+//		listIntersect.printListFromNode(intersectTwoList);
 
 	}
 
