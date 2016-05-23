@@ -64,7 +64,7 @@ public class MyHashTable<K, V> {
 
 		for (int i = 0; i < 10; i++) {
 
-			table.put("key" + i, "value" + i);
+			table.put("key" + i, "value" + i*i);
 
 		}
 
