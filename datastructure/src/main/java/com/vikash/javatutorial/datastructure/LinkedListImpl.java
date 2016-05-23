@@ -105,8 +105,7 @@ public class LinkedListImpl {
 		printListFromNode(getHead());
 	}
 	
-	public void printListFromNode(Node node) {
-		Node curNode = node;
+	public void printListFromNode(Node curNode) {
 		System.out.print("|");
 		while (curNode != null) {
 				System.out.print(curNode.data + "|->|");
