@@ -35,14 +35,12 @@ class AVLTree {
  // A utility function to right rotate subtree rooted with y
  // See the diagram given above.
  /*
- T1, T2, T3 and T4 are subtrees.
-         z                                      y 
-        / \                                   /   \
-       y   T4      Right Rotate (z)          x      z
-      / \          - - - - - - - - ->      /  \    /  \ 
-     x   T3                               T1  T2  T3  T4
-    / \
-  T1   T2
+ T1, T2, T3  are subtrees.
+       			y                               x
+               / \     Right Rotation          /  \
+              x   T3   – – – – – – – >        T1   y 
+             / \       < - - - - - - -            / \
+            T1  T2     Left Rotation            T2  T3
 */
  Node rightRotate(Node y) {
      Node x = y.left;
@@ -64,13 +62,12 @@ class AVLTree {
  // See the diagram given above.
  /*
   * 
-  z                                y
- /  \                            /   \ 
-T1   y     Left Rotate(z)       z      x
-    /  \   - - - - - - - ->    / \    / \
-   T2   x                     T1  T2 T3  T4
-       / \
-     T3  T4
+ T1, T2, T3  are subtrees.
+       			y                               x
+               / \     Right Rotation          /  \
+              x   T3   – – – – – – – >        T1   y 
+             / \       < - - - - - - -            / \
+            T1  T2     Left Rotation            T2  T3
   */
  Node leftRotate(Node x) {
      Node y = x.right;
