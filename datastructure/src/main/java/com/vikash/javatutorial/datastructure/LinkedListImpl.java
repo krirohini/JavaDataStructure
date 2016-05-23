@@ -1,7 +1,5 @@
 package com.vikash.javatutorial.datastructure;
 
-
-
 public class LinkedListImpl {
 	
 	static class Node {
