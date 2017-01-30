@@ -1,5 +1,7 @@
 package com.vikash.javatutorial.datastructure;
 
+import java.util.Queue;
+
 /**
  *  The <tt>LinearProbingHashST</tt> class represents a symbol table of generic
  *  key-value pairs.
@@ -202,12 +204,12 @@ public class LinearProbingHashST<Key, Value> {
      *
      * @return all keys in this sybol table
      */
-    public Iterable<Key> keys() {
-        Queue<Key> queue = new Queue<Key>();
-        for (int i = 0; i < M; i++)
-            if (keys[i] != null) queue.enqueue(keys[i]);
-        return queue;
-    }
+//    public Iterable<Key> keys() {
+//        Queue<Key> queue = new Queue<Key>();
+//        for (int i = 0; i < M; i++)
+//            if (keys[i] != null) queue.enqueue(keys[i]);
+//        return queue;
+//    }
 
     // integrity check - don't check after each put() because
     // integrity not maintained during a delete()
@@ -242,7 +244,7 @@ public class LinearProbingHashST<Key, Value> {
         }
 
         // print keys
-        for (Integer s : st.keys()) 
-            System.out.println(s + " " + st.get(s)); 
-    }
+//        for (Integer s : st.keys()) 
+//            System.out.println(s + " " + st.get(s)); 
+        }
 }
