@@ -1,5 +1,8 @@
 package com.vikash.tree;
 
+import java.util.PriorityQueue;
+import java.util.Queue;
+
 public class BstFromSortedArray {
 
 	class Node {
@@ -85,15 +88,27 @@ public class BstFromSortedArray {
 	
 	public static void main(String[] args) {
 		//int [] array = new int [] { 1 ,2,3,4,5}; 
-		int [] array = new int [] { }; 
-		BstFromSortedArray bst = new BstFromSortedArray();
-//		Node root = bst.buildBstFromSortedArray(array); 
-		Node root = bst.buildBstFromSortedArray(null); 
-		bst.printTree(root);
+//		int [] array = new int [] { }; 
+//		BstFromSortedArray bst = new BstFromSortedArray();
+////		Node root = bst.buildBstFromSortedArray(array); 
+//		Node root = bst.buildBstFromSortedArray(null); 
+//		bst.printTree(root);
+//		
+//		System.out.println("Null");
+//		
+//		Queue<Integer> queue = new PriorityQueue<>();
+//		
+		//String str = new String(); 
+		//Long.parseLong("123458797897897897897897897897897897897897897");
+		System.out.println(Long.parseLong("+123458797897"));
 		
-		System.out.println("Null");
+		
+		
 		
 	}
+	
+	
+	
 }
 
 
