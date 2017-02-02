@@ -1,4 +1,4 @@
-package com.mylist.mystack;
+package com.javatest.mystack;
 
 //import junit.framework.TestCase;
 

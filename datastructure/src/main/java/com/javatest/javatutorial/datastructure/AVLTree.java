@@ -1,4 +1,4 @@
-package com.vikash.javatutorial.datastructure;
+package com.javatest.javatutorial.datastructure;
 
 //Java program for deletion in AVL Tree
 

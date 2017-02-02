@@ -1,4 +1,4 @@
-package com.study.crackingcodinginterview.string;
+package com.javatest.crackingcodinginterview.string;
 
 public class StringRemoveDuplicates {
 

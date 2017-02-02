@@ -1,4 +1,4 @@
-package com.vikash.array;
+package com.javatest.array;
 
 public class ArrayGroup {
 	

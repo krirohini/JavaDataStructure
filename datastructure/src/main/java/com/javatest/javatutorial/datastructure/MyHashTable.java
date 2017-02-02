@@ -1,4 +1,4 @@
-package com.vikash.javatutorial.datastructure;
+package com.javatest.javatutorial.datastructure;
 
 public class MyHashTable<K, V> {
 

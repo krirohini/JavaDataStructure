@@ -1,4 +1,4 @@
-package com.vikash.tree;
+package com.javatest.tree;
 
 import java.util.PriorityQueue;
 import java.util.Queue;

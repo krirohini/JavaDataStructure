@@ -1,4 +1,4 @@
-package com.vikash.linklist;
+package com.javatest.linklist;
 
 import java.util.LinkedList;
 
