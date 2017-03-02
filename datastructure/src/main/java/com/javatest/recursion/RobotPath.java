@@ -21,31 +21,37 @@ public class RobotPath {
 		public void setFree(boolean isFree) {
 			this.isFree = isFree;
 		}
+		@Override
+		public String toString() {
+			return "Point [x=" + x + ", y=" + y + "]";
+		}
 		
 		
 	}
 	
 	public boolean getPath( int x, int y, List<Point> pathArray ) {
-		Point point = new Point(x,y); 
-		
+
+		//base condition 
 		if( x ==0 && y == 0) {
 			return true;
 		}
 		
 		boolean success = false;
-		if( x > 0 ) {
+		if( x > 0 ) { // try right
 			success = getPath(x-1, y, pathArray) ;
 		}
 		
-		if( !success && y > 0) {
+		if( !success && y > 0) { // try left
 			success = getPath(x, y-1, pathArray); 
 		}
 		
-		if( success) {
+		if( success) { // current path
+			Point point = new Point(x,y); 
 			pathArray.add(point);
 		}
 		return success;
 	}
+	
 	
 	public boolean getPathDP( int x, int y, 
 			List<Point> pathArray,
@@ -87,12 +93,15 @@ public class RobotPath {
 		int x = 5; 
 		int y = 4; 
 		robotPath.getPath(x, y, pathArray);
-		System.out.printf("With recursion from position x = %d , y = %d, no of path %d \n", x, y, pathArray.size());
+		System.out.printf("\nWith recursion from position x = %d , y = %d, no of path %d \n", x, y, pathArray.size());
+		System.out.println(pathArray);
 		pathArray.clear();
+		
+		
 		Map<Point, Boolean> visited = new HashMap<>();
 		robotPath.getPathDP(x,y, pathArray, visited);
-		System.out.printf("With DP from position x = %d , y = %d, no of path %d \n", x, y, pathArray.size());
-
+		System.out.printf("\nWith DP from position x = %d , y = %d, no of path %d \n", x, y, pathArray.size());
+		System.out.println(pathArray);
 		
 		
 		

@@ -1,4 +1,4 @@
-package com.javatest.crackingcodinginterview.string;
+package com.javatest.string;
 
 public class StringReverse {
 

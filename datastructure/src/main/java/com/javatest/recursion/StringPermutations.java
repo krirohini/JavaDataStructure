@@ -5,41 +5,49 @@ import java.util.List;
 
 public class StringPermutations {
 	
-	private static StringBuffer insertCharAt(char first, String word, int j) {
-		StringBuffer temp = new StringBuffer();
-		temp.append(word.substring(0, j));
-		temp.append(first);
-		temp.append(word.substring(j));
-		return temp;
+	private static String insertCharAt(char first, String word, int j) {
+		return word.substring(0, j) + first + word.substring(j);
 	}
 	
 	//This solution takes 0(n !) time, since there are n! permutations. We cannot do better than this.
 	public static List<String> getAllPermutations( String str) { 
-		
 		if(null == str) {
 			return null; 
 		}
-		List<String> permutations = new ArrayList<>();
 		
+		List<String> permList = new ArrayList<>();
+
 		if(str.length() == 0) {
-			permutations.add("");
-			return permutations;
+			permList.add("");
+			return permList;
 		}
-		
+
 		char first = str.charAt(0);
 		String reminder = str.substring(1);
 		List<String> words = getAllPermutations(reminder);
+		
 		for( String word : words) {
 			for( int j = 0 ; j <= word.length(); ++j) {
-			StringBuffer temp = insertCharAt(first, word, j);
-			permutations.add(temp.toString());
-			
+				permList.add(insertCharAt(first, word, j));
 			}
 		}
-		return permutations;
+		return permList;
 	}
 
-	
+	public static List<String> getAllPermutations2( char[] str, int start, int end) { 
+		List<String> list = new ArrayList<>();
+		if(start == end ) { 
+			list.add(String.valueOf(str));
+			return list;
+		} else { 
+			for( int i = start; i <= end; ++i) {
+				swapChars(str, start, i);
+				list.addAll(getAllPermutations2(str, start +1, end));
+				swapChars(str, start, i); //backtrack
+			}
+		}
+		return list;
+	}
 
 	
 	/* Function to print permutations of string
@@ -70,14 +78,15 @@ public class StringPermutations {
 	
 	
 	public static void main(String[] args) {
-		List<String> words = getAllPermutations("aac");
+		List<String> words = getAllPermutations("abc");
 		System.out.println("using recurssion" + words);
 
 		List<String> permutations = new ArrayList<>();
-		getAllPermutations("aac".toCharArray(), 0, 2, permutations);
+		getAllPermutations("abc".toCharArray(), 0, 2, permutations);
 		System.out.println("using backtracking" + permutations);
 
-
+		List<String> list = getAllPermutations2("abc".toCharArray(), 0, 2);
+		System.out.println("using backtracking" + list);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.javatest.recursion;
 
+import java.util.Scanner;
+
 public class fibonacci {
 	
 	//The Fibonacci Sequence is the series of numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 
@@ -12,34 +14,36 @@ public class fibonacci {
 		
 	}
 	
-	public static int max = 100;
-	public static int [] fib = new int[max];
-	
-	public static int fibonacciDP( int num) {
-		if( num ==0 ) return 0;
-		if( num == 1 ) return 1;
-		if(fib[num ] != 0 ) return fib[num];
-		return fibonacciRecu(num -1) + fibonacciRecu(num -2);
-		
+	public static int fibonacciDP(int n) {
+		if( n < 0) return 0; 
+
+		int [] fib = new int[n+1]; 
+		fib[0] = 0;
+		if(n > 0 ) { 
+			fib[1] = 1;
+		} 
+		return fibonacciDP(n, fib);
+	}
+	public static int fibonacciDP(int n, int [] fib) {
+		if( n < 0) return 0; 
+
+		if(fib[n] > 0) return fib[n];
+
+		fib[n]=  fibonacciDP( n-1, fib) + fibonacciDP( n-2, fib);
+		return fib[n];
+
 	}
 	
 	public static void main(String[] args) {
 		
-//		System.out.println(fibonacciRecu(0));
-//		System.out.println(fibonacciRecu(1));
-//		System.out.println(fibonacciRecu(2));
-//		System.out.println(fibonacciRecu(3));
-//		System.out.println(fibonacciRecu(4));
-//		System.out.println(fibonacciRecu(5));
-//		System.out.println(fibonacciRecu(45));
-		
-//		System.out.println(fibonacciDP(0));
-//		System.out.println(fibonacciDP(1));
-//		System.out.println(fibonacciDP(2));
-//		System.out.println(fibonacciDP(3));
-//		System.out.println(fibonacciDP(4));
-//		System.out.println(fibonacciDP(5));
-		System.out.println(fibonacciDP(45));
+		Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        scanner.close();
+        
+		for ( int i = 0 ; i <= n ; i++ ) { 
+			System.out.printf("fibonacciRecu of %d is %d \n", i, fibonacciRecu(i));
+			System.out.printf("fibonacciDP of %d is %d \n", i, fibonacciDP(i));
+		} 
 		
 	}
 

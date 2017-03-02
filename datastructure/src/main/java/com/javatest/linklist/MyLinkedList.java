@@ -1,8 +1,7 @@
 package com.javatest.linklist;
 
-import java.util.LinkedList;
 
-public class LinkedListProblem {
+public class MyLinkedList {
 
 	class Node {
 		int data; 
@@ -62,6 +61,28 @@ public class LinkedListProblem {
 		return head.next;
 	}
 	
+	public Node deleteNodeWithoutPrevious( Node head, int data) { 
+		// special case 
+		if(head == null) {
+			return head;
+		}
+		
+		if(head.data == data) {
+			return head.next; // move head; 
+		}
+		// regular case 
+		Node prev = head; 
+		while(prev.next != null) {
+			if(data == prev.next.data) {
+				prev.next = prev.next.next;
+				return head; // head did't change
+			}
+			prev = prev.next; 
+		}
+		return head;
+	}
+	
+	//using extra pointer for previous 
 	public Node deleteNode( Node head, int data) { 
 		Node cur = head;
 		Node prev = head; 
@@ -77,9 +98,9 @@ public class LinkedListProblem {
 			}
 			cur = cur.next; 
 		}
-		
 		return head; 
 	}
+	
 	// not very clear implementation 
 	public Node clearList(Node head) {
 		
@@ -91,9 +112,7 @@ public class LinkedListProblem {
 			cur.data = 0;
 			cur = next;
 		}
-		
 		return cur;
-		
 	}
 	
 	public Node buildOneTwoThree() {
@@ -110,7 +129,7 @@ public class LinkedListProblem {
 	public Node getNth(Node head, int n) {
 		
 		Node cur = head;
-		int counter =1; 
+		int counter = 1; 
 		while ( cur != null ) {
 			if(counter == n) {
 				return cur;
@@ -118,13 +137,23 @@ public class LinkedListProblem {
 			cur = cur.next;
 			counter++;
 		}
-		
 		return null; 
-		
 	}
 	
+	/**
+	 * 2.2 Implement an algorithm to find the nth to last element of a singly linked list.
+	 */
+	
+	
+	
 	public static void main( String [] args) {
-		LinkedListProblem list = new LinkedListProblem();
+		MyLinkedList list = new MyLinkedList();
+		
+		basicTest(list);
+		
+	}
+
+	private static void basicTest(MyLinkedList list) {
 		Node head = null;
 		//head = list.buildOneTwoThree();
 		head = list.pushAtEnd(head, 3); 
@@ -141,16 +170,10 @@ public class LinkedListProblem {
 		head = list.pop(head, popNode);
 		list.print(head);
 		///Todo :
-		//System.out.println("data at pop node is" + popNode.data);		
-		LinkedList<Integer > list222 = new LinkedList<>();
-		//list222.		
-		
-		
-		//System.out.println("list lenght is : "+ list.length(head) );
-		
+		//.out.println("data at pop node is" + popNode.data);		
+		System.out.println("list lenght is : "+ list.length(head) );
 		Node nthNode = list.getNth(head, 2);
 		System.out.printf("%d th node is %s", 2, (nthNode == null) ? "null" : String.valueOf(nthNode.data));
-		
 	}
 	
 	

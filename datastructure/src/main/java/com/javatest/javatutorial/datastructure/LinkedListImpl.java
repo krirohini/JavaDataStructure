@@ -10,10 +10,17 @@ public class LinkedListImpl {
 			data = value;
 			next = null;
 		}
+
+		@Override
+		public String toString() {
+			return "Node [data=" + data + "]";
+		}
+		
 	}
 	private Node head;
+	private int length = 0; 
 	
-	public Node getHead() {
+	public synchronized Node getHead() {
 		return head;
 	}
 
@@ -24,22 +31,12 @@ public class LinkedListImpl {
 	public LinkedListImpl() {
 		setHead(null);
 	}
-	
-	
-	Node GetNth( int index) {
-		Node current = head;
-		int count = 0; // the index of the node we're currently looking at
-		while (current != null) {
-			if (count == index) {
-				return(current);
-			}
-			count++;
-			current = current.next;
-		}
-		assert(true); // if we get to this line, the caller was asking
-		// for a non-existent element so we assert fail.
-		return null;
+
+	public void deleteList() {
+		setHead(null);
 	}
+	
+	
 
 	public Node push(Node node, int val) {
 		Node tNode = new Node(val);
@@ -47,6 +44,7 @@ public class LinkedListImpl {
 		return tNode;
 	}
 	
+	// prob 3: 
 	public Node pop() {
 		if(head == null) {
 			return null;
@@ -57,14 +55,15 @@ public class LinkedListImpl {
 		return firstNode;
 	}
 	
-	public void addatBeg(int val) {
+	public void addAtBeg(int val) {
 		head = push(head, val);
 	}
 	
+	// Prob 5: 
 	public void insertNth(int val, int index) {
 		
 		if(index == 0){
-			addatBeg(val);
+			addAtBeg(val);
 		} else {
 			Node prevNode = GetNth(index-1);
 			Node newNode = push(prevNode.next, val);
@@ -72,27 +71,28 @@ public class LinkedListImpl {
 		}
 	}
 
+	
 	//addAtEnd
 	public Node append(int val) {
 		Node tNode = new Node(val);
+		return append(tNode);
+	}
+	
+	public Node append(Node tNode ) {
+		
+		//special case head is null
 		if (getHead() == null) {
 			setHead(tNode);
 			return tNode;
 		}
 		Node curNode = getHead();
-		while(curNode != null) {
-			if(curNode.next == null) {
-				curNode.next = tNode;
-				return tNode;
-			}
+
+		//go to last node but not null 
+		while(curNode.next != null) {
 			curNode = curNode.next;
 		}
 		
-//		while(curNode.next != null) {
-//			curNode = curNode.next;
-//		}
-//		
-//		curNode.next = tNode;
+		curNode.next = tNode;
 		
 		return tNode;
 	}
@@ -114,7 +114,9 @@ public class LinkedListImpl {
 		System.out.println("null|");
 	}
 
-	public int size() {
+	// 1 — Count()
+/* 
+ * 	public int size() {
 		int count = 0;
 		if(getHead() == null) {
 			return count;
@@ -125,6 +127,133 @@ public class LinkedListImpl {
 			curNode = curNode.next;
 		}
 		return count;
+	}
+*/
+	public int size() {
+		int count = 0;
+		for(Node curNode = getHead() ; curNode != null ; curNode= curNode.next ) {
+			count ++;
+		}
+		return count; 
+	}
+	
+
+	
+	// Prob 1: 
+	public int countElement(int searchFor) {
+		int count = 0;
+		for(Node curNode = getHead() ; curNode != null ; curNode= curNode.next ) {
+			if(curNode.data == searchFor) { 
+			count ++;
+			}
+		}
+		return count; 
+	}
+	
+	public Node searchElement( int searchFor) {
+		for(Node curNode = getHead() ; curNode != null ; curNode= curNode.next ) {
+			if(curNode.data == searchFor) { 
+			 return curNode;
+			}
+		}
+		return null;
+	}
+	
+	public int searchElementIndex( int searchFor) {
+		int pos = 0; 
+		for(Node curNode = getHead() ; curNode != null ; curNode= curNode.next ) {
+			if(curNode.data == searchFor) { 
+			 return pos;
+			}
+			pos++;
+		}
+		return Integer.MIN_VALUE;
+	} 
+	
+	// prob 2:
+	
+/*	
+	public Node GetNth( int index) {
+		
+		int count = 0; // the index of the node we're currently looking at
+		Node current = head;
+		while (current != null) {
+			if (count == index) {
+				return(current);
+			}
+			count++;
+			current = current.next;
+		}
+		assert(false); // if we get to this line, the caller was asking
+		// for a non-existent element so we assert fail.
+		return null;
+	}
+*/
+	
+	public Node GetNth( int index) {
+		int curIndex  = 0; // the index of the node we're currently looking at
+		for(Node curNode = head  ; curNode != null ; curNode = curNode.next ) { 
+			if (curIndex == index) {
+				return(curNode);
+			}
+			curIndex ++;
+
+		}
+		assert(false); // if we get to this line, the caller was asking
+		// for a non-existent element so we assert fail.
+		return null;
+	}
+		
+	
+	public static void appendList(LinkedListImpl list1, LinkedListImpl list2) { 
+		list1.append(list2.getHead()); 
+		list2.setHead(null);
+	}
+	
+	// problem 6 : 
+	public void sortedInsert(Node nNode) {
+		//special case null list or add at begining
+		if(head == null || head.data > nNode.data) { 
+			nNode.next = head; 
+			setHead(nNode);
+		} else {
+			Node curNode = head;
+			while(curNode.next !=null && curNode.next.data < nNode.data ) { 
+				curNode = curNode.next;
+			}
+			nNode.next = curNode.next;
+			curNode.next = nNode;
+		}
+		
+	}
+	
+	//problem 7 : InsertSort() Solution
+	
+	public  void convertToSortedList() {
+		
+		Node curNode = head; 
+		head = null;
+		while ( curNode != null) {
+			Node next = curNode.next;
+			sortedInsert(curNode);
+			curNode = next;
+		}
+	}
+	public static LinkedListImpl convertToSortedList(LinkedListImpl list) {
+		LinkedListImpl newList = new LinkedListImpl();
+//		for (Node curNode = head  ; curNode != null;  ) {
+//		Node next = curNode.next ;
+//			newList.sortedInsert(new Node(curNode.data));
+//			curNode = next;
+//		}
+		Node curNode = list.head;
+		
+		while(curNode != null) {
+			Node next = curNode.next;
+					newList.sortedInsert(new Node(curNode.data));
+			curNode = next;
+		}
+		return newList;
 	}
 	
 	public void reverseListIterative() {
@@ -223,22 +352,17 @@ public class LinkedListImpl {
     }
  
 	
-/*	public static void main(String[] args) { 
-		LinkedListImpl list = new LinkedListImpl();
+	public static void main(String[] args) { 
+		 //basicLinkListTest();
+		//sortedInsertTest();
 		
-		list.addatBeg(3);
-		list.insertNth(4, 1);
+		LinkedListImpl list = buildLinkListTest();
 		list.printList();
-		Node intersectNode = list.append(5);
-		
-		list.addatBeg(2);
-		list.addatBeg(1);
-		list.insertNth(6, 5);
-		list.append(7);
-		list.append(8);
-
-		
+//		LinkedListImpl sortedList = convertToSortedList(list);
+//		sortedList.printList();
+		list.convertToSortedList();
 		list.printList();
+		
 //		System.out.println("Size of the list is " +list.size());
 ////		list.reverseListIterative();
 ////		list.printList();
@@ -261,6 +385,53 @@ public class LinkedListImpl {
 //		listIntersect.printListFromNode(intersectTwoList);
 
 	}
-	*/
+
+	private static void sortedInsertTest() {
+		LinkedListImpl list = new LinkedListImpl();
+		list.sortedInsert(new Node(10));
+		list.sortedInsert(new Node(3));
+		list.sortedInsert(new Node(5));
+		list.sortedInsert(new Node(12));
+		list.sortedInsert(new Node(2));
+		list.sortedInsert(new Node(14));
+		list.printList();
+	}
+	
+	
+	private static LinkedListImpl buildLinkListTest() {
+         LinkedListImpl list = new LinkedListImpl();
+		
+		list.addAtBeg(13);
+		list.insertNth(4, 1);
+		list.append(50);
+		
+		list.addAtBeg(22);
+		list.addAtBeg(13);
+		
+		
+		list.insertNth(6, 5);
+		return list;
+	}
+	private static void basicLinkListTest() {
+		LinkedListImpl list = buildLinkListTest();
+		list.printList();
+		
+		LinkedListImpl list2 = new LinkedListImpl();
+		list2.append(7);
+		list2.append(8);
+		list2.append(8);
+
+		
+		list2.printList();
+		
+		appendList(list, list2);
+		list.printList();
+		list2.printList();
+		
+		System.out.println("Size of the list is " +list.size());
+		System.out.println("number of 8 are " + list2.countElement(8));
+		System.out.println(list2.GetNth(100));
+	}
+	
 
 }
